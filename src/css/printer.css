@@ -1,0 +1,79 @@
+
+.printer-container {
+  width: 100%;
+  height: auto;
+  height: 100%;
+  margin: 0 auto;
+  position: absolute;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.printer-item, 
+.printer-item * {
+  background: transparent;
+  border: none;
+}
+
+.printer-item textarea {
+  resize: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+.printer-print img {
+  display: none;
+}
+
+.printer-print .printer-item,
+.printer-print .printer-item td>* {
+  border: 1px solid transparent;
+}
+
+.printer-design .printer-item,
+.printer-design .printer-item td>* {
+  border: 1px dashed #FF00E1; 
+}
+
+.printer-fill .printer-item,
+.printer-fill .printer-item td>* {
+  border: 1px solid #FF00E1;
+  border-top-color: transparent; 
+}
+
+.printer-fill .printer-item.printer-item-table {
+  border: 1px solid transparent;
+}
+
+.printer-design .printer-item.selected {
+  border: 1px solid #DC143C; 
+}
+
+.printer-item-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.printer-design .printer-item-move {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background: #DAA520;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0px 0px 1px #DAA520;
+  cursor: move;
+}
+
+.printer-fill .printer-item-move,
+.printer-print .printer-item-move {
+  display: none;
+}
