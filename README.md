@@ -1,2 +1,4 @@
-PrinterJS
+Easy-Print JS
 ========
+
+
