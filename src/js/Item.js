@@ -7,6 +7,7 @@ module.exports = Base.extend({
   pos: { x: 0, y: 0 },
   attributes: null,
   style: null,
+  className: "",
 
   selected: false,
   wrapped: true,
@@ -31,6 +32,7 @@ module.exports = Base.extend({
     }
     var ele = document.createElement(this.tagName || "div");
     ele.id = this.cid;
+    ele.className = this.className;
 
     if (this.attr){
       for (var attr in this.attr){

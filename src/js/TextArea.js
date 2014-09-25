@@ -43,7 +43,7 @@ var TextBox = module.exports = Item.extend({
   },
 
   getValue: function(){
-    return this.el.innerText;
+    return this.el.innerHTML;
   }
 
 });
