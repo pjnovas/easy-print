@@ -109,7 +109,7 @@ var template = {
 
     products: {
       type: "grid",
-      rows: 15,
+      rows: 3,
       pos: {
         x: 100,
         y: 400

@@ -19,47 +19,58 @@ var Grid = module.exports = Item.extend({
 
   buildTable: function(){
     this.valuesEl = [];
-    var cols = this.cols;
+
+    if (this.bodyEl){
+      this.el.removeChild(this.bodyEl);
+      this.bodyEl = null;
+    }
 
     var bodyEl = document.createElement("tbody");
 
     for(var i=0; i<this.rows; i++){
-      var rowEl = document.createElement("tr");
-      var cellsEl = [];
-    
-      for(var j=0; j<this.fields.length; j++){
-        var field = this.fields[j];
-        var cellProps = cols[j];
-
-        var valueEl = document.createElement("td");
-
-        if (cellProps && cellProps.attr){
-          for (var attr in cellProps.attr){
-            valueEl.setAttribute(attr, cellProps.attr[attr]);
-          }
-        }
-
-        if (cellProps && cellProps.style){
-          for (var css in cellProps.style){
-            valueEl.style[css] = cellProps.style[css];
-          }
-        }
-
-        field.container = valueEl;
-        var ele = this.createCellItem(field);
-        valueEl.appendChild(ele.el);
-
-        cellsEl.push(ele);
-
-        rowEl.appendChild(valueEl);
-      }
-
-      this.valuesEl.push(cellsEl);
+      var rowEl = this.createRowEl();
       bodyEl.appendChild(rowEl);
     }
 
+    this.bodyEl = bodyEl;
     this.el.appendChild(bodyEl);
     this.wrapper.className += " printer-item-table";
+  },
+
+  createRowEl: function(){
+    var cols = this.cols;
+    var rowEl = document.createElement("tr");
+    var cellsEl = [];
+  
+    for(var j=0; j<this.fields.length; j++){
+      var field = this.fields[j];
+      var cellProps = cols[j];
+
+      var valueEl = document.createElement("td");
+
+      if (cellProps && cellProps.attr){
+        for (var attr in cellProps.attr){
+          valueEl.setAttribute(attr, cellProps.attr[attr]);
+        }
+      }
+
+      if (cellProps && cellProps.style){
+        for (var css in cellProps.style){
+          valueEl.style[css] = cellProps.style[css];
+        }
+      }
+
+      field.container = valueEl;
+      var ele = this.createCellItem(field);
+      valueEl.appendChild(ele.el);
+
+      cellsEl.push(ele);
+
+      rowEl.appendChild(valueEl);
+    }
+
+    this.valuesEl.push(cellsEl);
+    return rowEl;
   },
 
   createCellItem: function(field){
@@ -79,18 +90,22 @@ var Grid = module.exports = Item.extend({
     return ele;
   },
 
+  normalizeRows: function(rows){
+    this.rows = rows;
+    this.buildTable();
+  },
+
   setValue: function(values){
+
+    this.normalizeRows(values.length);
 
     for(var i=0; i<this.valuesEl.length; i++){
       var row = this.valuesEl[i];
       
-      if (values.length-1 >= i){
+      for(var j=0; j<row.length; j++){
 
-        for(var j=0; j<row.length; j++){
-
-          if (values[i].length-1 >= j){
-            row[j].setValue(values[i][j]);
-          }
+        if (values[i].length-1 >= j){
+          row[j].setValue(values[i][j]);
         }
       }
     }

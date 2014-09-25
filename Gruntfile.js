@@ -13,7 +13,9 @@ module.exports = function(grunt) {
       dist: {
         root: "dist/",
         printerJS: "printer.js",
-        printerCSS: "printer.css"
+        printerCSS: "printer.css",
+        printerJSMin: "printer.min.js",
+        printerCSSMin: "printer.min.css"
       }
     },
 
@@ -109,7 +111,7 @@ module.exports = function(grunt) {
     uglify: {
       all: {
         files: {
-          '<%= paths.dist.root %><%= paths.dist.printerJS %>': 
+          '<%= paths.dist.root %><%= paths.dist.printerJSMin %>': 
             [ '<%= paths.dist.root %><%= paths.dist.printerJS %>' ]
         }
       }
@@ -118,7 +120,7 @@ module.exports = function(grunt) {
     cssmin: {
       all: {
         files: {
-          "<%= paths.dist.root %><%= paths.dist.printerCSS %>": 
+          "<%= paths.dist.root %><%= paths.dist.printerCSSMin %>": 
             ["<%= paths.dist.root %><%= paths.dist.printerCSS %>"],
         }
       }
@@ -136,7 +138,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  // export
+  // dist
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   
@@ -153,7 +155,7 @@ module.exports = function(grunt) {
   ];
 
   grunt.registerTask("default", build);
-  grunt.registerTask("export", build.concat(dist));
+  grunt.registerTask("dist", build.concat(dist));
   
   return grunt.registerTask('server', function() {
     grunt.task.run(build);
