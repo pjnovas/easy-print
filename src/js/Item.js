@@ -101,9 +101,29 @@ module.exports = Base.extend({
   onPressed: function(){},
   onReleased: function(){},
 
-  move: function(inc){
+  move: function(inc, bounds){
     this.pos.x += inc.x;
     this.pos.y += inc.y;
+
+    if (this.pos.x + this.margin.x < 0){
+      this.pos.x = this.margin.x*-1;
+    }
+
+    if (this.pos.y + this.margin.y < 0){
+      this.pos.y = this.margin.y*-1;
+    }
+
+    var width = this.wrapper.offsetWidth;
+    var height = this.wrapper.offsetHeight;
+
+    if (this.pos.x + width > bounds.x){
+      this.pos.x = bounds.x - width;
+    }
+
+    if (this.pos.y + height > bounds.y){
+      this.pos.y = bounds.y - height;
+    }
+
     this.update();
   },
 

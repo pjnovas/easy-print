@@ -86,6 +86,7 @@ module.exports = Base.extend({
   },
 
   enabled: false,
+  editMode: false,
 
   actions: {
     control: false,
@@ -153,7 +154,7 @@ module.exports = Base.extend({
   },
 
   _onKeyUp: function(e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 
@@ -181,7 +182,7 @@ module.exports = Base.extend({
   },
 
   _onKeyDown: function(e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 
@@ -209,7 +210,7 @@ module.exports = Base.extend({
   },
 
   _onMouseEvent: function(type, e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 
@@ -503,9 +504,29 @@ module.exports = Base.extend({
   onPressed: function(){},
   onReleased: function(){},
 
-  move: function(inc){
+  move: function(inc, bounds){
     this.pos.x += inc.x;
     this.pos.y += inc.y;
+
+    if (this.pos.x + this.margin.x < 0){
+      this.pos.x = this.margin.x*-1;
+    }
+
+    if (this.pos.y + this.margin.y < 0){
+      this.pos.y = this.margin.y*-1;
+    }
+
+    var width = this.wrapper.offsetWidth;
+    var height = this.wrapper.offsetHeight;
+
+    if (this.pos.x + width > bounds.x){
+      this.pos.x = bounds.x - width;
+    }
+
+    if (this.pos.y + height > bounds.y){
+      this.pos.y = bounds.y - height;
+    }
+
     this.update();
   },
 
@@ -541,7 +562,6 @@ module.exports = Base.extend({
 
 
 var Base = require("./Base");
-var template = require("./template");
 var Controls = require("./Controls");
 
 var TextBox = require("./TextBox");
@@ -568,6 +588,10 @@ module.exports = Base.extend({
       throw new Error("Expected a 'container'");
     }
 
+    if (!options.template){
+      throw new Error("Expected a 'template'");
+    }    
+
     var ready = options.ready || function(){};
 
     this.holder = (options && options.container) || document.body;
@@ -576,7 +600,7 @@ module.exports = Base.extend({
     this.container.className = "printer-container";
     this.holder.appendChild(this.container);
 
-    this.template = (options && options.template) || template;
+    this.template = options.template;
     this.mode = (options && options.mode) || modes[0];
   
     this.container.className += " printer-" + this.mode;
@@ -722,7 +746,7 @@ module.exports = Base.extend({
           break;
         }
 
-        self.selected.move(self.axisAcc);
+        self.selected.move(self.axisAcc, self.size);
       })
       .on("arrow:off", function(arrow){
         switch(arrow){
@@ -748,7 +772,8 @@ module.exports = Base.extend({
         }
       });
 
-    this.controls.enable();    
+    this.controls.enable();
+    this.controls.editMode = (this.mode === "design" ? true : false);
   },
 
   fill: function(values){
@@ -770,6 +795,8 @@ module.exports = Base.extend({
       this.selected.unselect();
       this.selected = null;
     }
+
+    this.controls.editMode = (this.mode === "design" ? true : false);
   },
 
   getTemplate: function(){
@@ -796,7 +823,7 @@ module.exports = Base.extend({
 
 });
 
-},{"./Base":1,"./Controls":2,"./Grid":3,"./TextArea":6,"./TextBox":7,"./template":9}],6:[function(require,module,exports){
+},{"./Base":1,"./Controls":2,"./Grid":3,"./TextArea":6,"./TextBox":7}],6:[function(require,module,exports){
 
 var Item = require("./Item");
 
@@ -879,41 +906,4 @@ var TextBox = module.exports = Item.extend({
 (function(){
   window.Printer = require("./Printer");
 }());
-},{"./Printer":5}],9:[function(require,module,exports){
-
-// Base Template
-
-module.exports = {
-  
-  bg: null,
-  useBgSize: false,
-  
-  size: {
-    width: 900,
-    height: 600
-  },
-
-  items: {
-
-    example1: {
-      type: "input",
-      pos: {
-        x: 50,
-        y: 50
-      },
-      size: {
-        x: 100
-      },
-      style: {
-        color: "blue"
-      },
-      attr: {
-        "data-on": true
-      },
-      value: "example1"
-    }
-
-  }
-
-};
-},{}]},{},[8]);
+},{"./Printer":5}]},{},[8]);

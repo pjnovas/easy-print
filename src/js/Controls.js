@@ -16,6 +16,7 @@ module.exports = Base.extend({
   },
 
   enabled: false,
+  editMode: false,
 
   actions: {
     control: false,
@@ -83,7 +84,7 @@ module.exports = Base.extend({
   },
 
   _onKeyUp: function(e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 
@@ -111,7 +112,7 @@ module.exports = Base.extend({
   },
 
   _onKeyDown: function(e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 
@@ -139,7 +140,7 @@ module.exports = Base.extend({
   },
 
   _onMouseEvent: function(type, e){
-    if (!this.enabled){
+    if (!this.enabled || !this.editMode){
       return;
     }
 

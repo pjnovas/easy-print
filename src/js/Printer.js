@@ -1,7 +1,6 @@
 
 
 var Base = require("./Base");
-var template = require("./template");
 var Controls = require("./Controls");
 
 var TextBox = require("./TextBox");
@@ -28,6 +27,10 @@ module.exports = Base.extend({
       throw new Error("Expected a 'container'");
     }
 
+    if (!options.template){
+      throw new Error("Expected a 'template'");
+    }    
+
     var ready = options.ready || function(){};
 
     this.holder = (options && options.container) || document.body;
@@ -36,7 +39,7 @@ module.exports = Base.extend({
     this.container.className = "printer-container";
     this.holder.appendChild(this.container);
 
-    this.template = (options && options.template) || template;
+    this.template = options.template;
     this.mode = (options && options.mode) || modes[0];
   
     this.container.className += " printer-" + this.mode;
@@ -182,7 +185,7 @@ module.exports = Base.extend({
           break;
         }
 
-        self.selected.move(self.axisAcc);
+        self.selected.move(self.axisAcc, self.size);
       })
       .on("arrow:off", function(arrow){
         switch(arrow){
@@ -208,7 +211,8 @@ module.exports = Base.extend({
         }
       });
 
-    this.controls.enable();    
+    this.controls.enable();
+    this.controls.editMode = (this.mode === "design" ? true : false);
   },
 
   fill: function(values){
@@ -230,6 +234,8 @@ module.exports = Base.extend({
       this.selected.unselect();
       this.selected = null;
     }
+
+    this.controls.editMode = (this.mode === "design" ? true : false);
   },
 
   getTemplate: function(){
