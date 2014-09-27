@@ -845,7 +845,7 @@ var TextBox = module.exports = Item.extend({
   },
 
   setValue: function(value){
-    this.el.innerText = value.toString();
+    this.el.value = value.toString();
     this.resize();
   },
 
@@ -869,7 +869,7 @@ var TextBox = module.exports = Item.extend({
   },
 
   getValue: function(){
-    return this.el.innerHTML;
+    return this.el.value;
   }
 
 });
