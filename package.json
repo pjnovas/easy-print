@@ -1,8 +1,8 @@
 {
-  "name": "printer",
-  "title": "printer",
-  "version": "0.0.1",
-  "description": "printer test",
+  "name": "easy-print",
+  "title": "Easy Print",
+  "version": "1.0.0",
+  "description": "Easy print on templates.",
   "author": "Pablo Novas <pjnovas@gmail.com>",
   "dependencies": {},
   "devDependencies": {

@@ -1,4 +1,4 @@
-var template = {  
+var template = {
   bg: "test_bg.png",
   useBgSize: true,
 
@@ -14,7 +14,7 @@ var template = {
         x: 150
       }
     },
-    
+
     invTo: {
       type: "textbox",
       pos: {
@@ -32,7 +32,7 @@ var template = {
         "data-on": true
       }
     },
-    
+
     invAddress: {
       type: "textbox",
       pos: {
@@ -131,7 +131,7 @@ var template = {
           valign: "bottom"
         }
       }],
-      
+
       fields: [{
         type: "textbox",
         size: {
@@ -202,7 +202,7 @@ var values = {
     for (var i=0; i<menuLinks.length; i++){
       menuLinks[i].className = "";
     }
-    
+
     var ele = e.srcElement;
     ele.className = "selected";
 
