@@ -1,12 +1,12 @@
 # Easy-Print JS
 
 Easy print on templates.
-This library is made to fill printed templates. i.e. Printed Invoices, Fill Printed Forms, etc.
+This library is meant to fill printed templates. i.e. Printed Invoices, Fill Printed Forms, etc.
 
 ![explain](https://raw.github.com/pjnovas/easy-print/master/easy-print.png)
 
 ## How To
-
+*coming soon*
 
 
 ## Runing examples
