@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Base.js":[function(require,module,exports){
 
 /*
  * Taken from Backbone and Underscore
@@ -32,7 +32,7 @@ _.extend = function(obj) {
   return obj;
 };
 
-// BASE CLASS 
+// BASE CLASS
 
 var Base = function(attributes) {
 
@@ -41,7 +41,7 @@ var Base = function(attributes) {
   }
 
   this.cid = _.uniqueId('c');
-  
+
   this.start.apply(this, arguments);
 };
 
@@ -52,7 +52,7 @@ _.extend(Base.prototype, {
 Base.extend = function(protoProps, staticProps) {
   var parent = this;
   var child = function(){ return parent.apply(this, arguments); };
-    
+
   _.extend(child, parent, staticProps);
 
   var Surrogate = function(){ this.constructor = child; };
@@ -67,7 +67,7 @@ Base.extend = function(protoProps, staticProps) {
 
 module.exports = Base;
 
-},{}],2:[function(require,module,exports){
+},{}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Controls.js":[function(require,module,exports){
 
 var Base = require("./Base");
 
@@ -81,7 +81,7 @@ module.exports = Base.extend({
 
     , "arrow:on": null
     , "arrow:off": null
-    
+
     , "pause": null
   },
 
@@ -138,7 +138,7 @@ module.exports = Base.extend({
     var key = e.which || e.keyCode;
 
     switch(key){
-      case 37: 
+      case 37:
         return "arrow:left";
       case 38:
         return "arrow:up";
@@ -166,7 +166,7 @@ module.exports = Base.extend({
       }
 
       if (evName.indexOf("arrow") > -1){
-        var arrow = evName.split(":")[1];      
+        var arrow = evName.split(":")[1];
 
         evName = "arrow:off";
         if (this.events[evName]){
@@ -194,7 +194,7 @@ module.exports = Base.extend({
       }
 
       if (evName.indexOf("arrow") > -1){
-        var arrow = evName.split(":")[1];      
+        var arrow = evName.split(":")[1];
 
         evName = "arrow:on";
         if (this.events[evName]){
@@ -246,27 +246,27 @@ module.exports = Base.extend({
       , body = doc.body
       , docEle = doc.documentElement;
 
-    if (e.pageX || e.pageY) { 
+    if (e.pageX || e.pageY) {
       x = e.pageX;
       y = e.pageY;
     }
-    else { 
-      x = e.clientX + body.scrollLeft + docEle.scrollLeft; 
-      y = e.clientY + body.scrollTop + docEle.scrollTop; 
-    } 
-    
+    else {
+      x = e.clientX + body.scrollLeft + docEle.scrollLeft;
+      y = e.clientY + body.scrollTop + docEle.scrollTop;
+    }
+
     x -= ele.offsetLeft + parent.offsetLeft;
     y -= ele.offsetTop + parent.offsetTop;
 
     x += parent.scrollLeft;
     y += parent.scrollTop;
-    
+
     return { x: x, y: y };
   }
 
 });
 
-},{"./Base":1}],3:[function(require,module,exports){
+},{"./Base":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Base.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Grid.js":[function(require,module,exports){
 
 var Item = require("./Item");
 var TextBox = require("./TextBox");
@@ -310,7 +310,7 @@ var Grid = module.exports = Item.extend({
     var cols = this.cols;
     var rowEl = document.createElement("tr");
     var cellsEl = [];
-  
+
     for(var j=0; j<this.fields.length; j++){
       var field = this.fields[j];
       var cellProps = cols[j];
@@ -370,7 +370,7 @@ var Grid = module.exports = Item.extend({
 
     for(var i=0; i<this.valuesEl.length; i++){
       var row = this.valuesEl[i];
-      
+
       for(var j=0; j<row.length; j++){
 
         if (values[i].length-1 >= j){
@@ -387,7 +387,7 @@ var Grid = module.exports = Item.extend({
     for(var i=0; i<this.valuesEl.length; i++){
       var row = this.valuesEl[i];
       var rowVal = [];
-      
+
       for(var j=0; j<row.length; j++){
         rowVal.push(row[j].getValue());
       }
@@ -400,7 +400,7 @@ var Grid = module.exports = Item.extend({
 
 });
 
-},{"./Item":4,"./TextArea":6,"./TextBox":7}],4:[function(require,module,exports){
+},{"./Item":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Item.js","./TextArea":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextArea.js","./TextBox":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextBox.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Item.js":[function(require,module,exports){
 
 var Base = require("./Base");
 
@@ -416,7 +416,7 @@ module.exports = Base.extend({
   wrapped: true,
 
   start: function(options){
-    
+
     this.template = options;
     delete this.template.container;
     delete this.template.wrapped;
@@ -453,20 +453,23 @@ module.exports = Base.extend({
       wrapper.style.position = "absolute";
       wrapper.style.top = this.pos.y + "px";
       wrapper.style.left = this.pos.x + "px";
-      
+
       if (this.size && this.size.x){
         wrapper.style.width = ele.style.width = this.size.x + "px";
       }
-      
+
       wrapper.style.zIndex = 1;
       wrapper.className = "printer-item";
-      
+
       wrapper.appendChild(ele);
       this.container.appendChild(wrapper);
     }
     else {
-      ele.style.width = this.size.x + "px";
-      this.container.appendChild(ele); 
+      if (this.size){
+        ele.style.width = this.size.x + "px";
+      }
+
+      this.container.appendChild(ele);
     }
 
     this.el = ele;
@@ -558,7 +561,7 @@ module.exports = Base.extend({
 
 });
 
-},{"./Base":1}],5:[function(require,module,exports){
+},{"./Base":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Base.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Printer.js":[function(require,module,exports){
 
 
 var Base = require("./Base");
@@ -579,18 +582,18 @@ module.exports = Base.extend({
   justSelect: false,
 
   start: function(options){
-    
+
     if (!options){
-      throw new Error("Expected options");
+      throw new Error("EasyPrint: Expected options");
     }
 
     if (!options.container){
-      throw new Error("Expected a 'container'");
+      throw new Error("EasyPrint: Expected a 'container'");
     }
 
     if (!options.template){
-      throw new Error("Expected a 'template'");
-    }    
+      throw new Error("EasyPrint: Expected a 'template'");
+    }
 
     var ready = options.ready || function(){};
 
@@ -602,7 +605,7 @@ module.exports = Base.extend({
 
     this.template = options.template;
     this.mode = (options && options.mode) || modes[0];
-  
+
     this.container.className += " printer-" + this.mode;
     this.size = this.template.size;
 
@@ -627,14 +630,14 @@ module.exports = Base.extend({
     var self = this;
 
     var img = new window.Image();
-    
+
     img.onload = function(){
       img.style.position = "absolute";
       img.style.zIndex = 0;
 
       self.container.appendChild(img);
 
-      if (self.template.useBgSize){      
+      if (self.template.useBgSize){
         self.size = {
           x: img.width,
           y: img.height
@@ -699,7 +702,7 @@ module.exports = Base.extend({
     for (var name in this.items){
       this.items[name].unselect();
     }
-    
+
     item.select();
     this.selected = item;
     this.justSelect = true;
@@ -728,20 +731,20 @@ module.exports = Base.extend({
         var inc = 1;
 
         if (self.controls.actions.shift){
-          inc = 20;          
+          inc = 20;
         }
 
         switch(arrow){
-          case "left": 
+          case "left":
             self.axisAcc.x -= inc;
           break;
-          case "right": 
+          case "right":
             self.axisAcc.x += inc;
           break;
-          case "up": 
+          case "up":
             self.axisAcc.y -= inc;
           break;
-          case "down": 
+          case "down":
             self.axisAcc.y += inc;
           break;
         }
@@ -750,12 +753,12 @@ module.exports = Base.extend({
       })
       .on("arrow:off", function(arrow){
         switch(arrow){
-          case "left": 
-          case "right": 
+          case "left":
+          case "right":
             self.axisAcc.x = 0;
           break;
-          case "up": 
-          case "down": 
+          case "up":
+          case "down":
             self.axisAcc.y = 0;
           break;
         }
@@ -787,7 +790,9 @@ module.exports = Base.extend({
 
   setMode: function(mode){
     var prefix = "printer-";
-    this.container.className = this.container.className.replace(prefix + this.mode, "");
+    this.container.className =
+      this.container.className.replace(prefix + this.mode, "");
+
     this.mode = mode;
     this.container.className += " " + prefix + this.mode;
 
@@ -823,7 +828,7 @@ module.exports = Base.extend({
 
 });
 
-},{"./Base":1,"./Controls":2,"./Grid":3,"./TextArea":6,"./TextBox":7}],6:[function(require,module,exports){
+},{"./Base":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Base.js","./Controls":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Controls.js","./Grid":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Grid.js","./TextArea":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextArea.js","./TextBox":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextBox.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextArea.js":[function(require,module,exports){
 
 var Item = require("./Item");
 
@@ -864,7 +869,7 @@ var TextBox = module.exports = Item.extend({
       this.el.style.height = this.el.scrollHeight + "px";
     }
     else {
-      this.el.style.height = "20px"; 
+      this.el.style.height = "20px";
     }
   },
 
@@ -874,7 +879,7 @@ var TextBox = module.exports = Item.extend({
 
 });
 
-},{"./Item":4}],7:[function(require,module,exports){
+},{"./Item":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Item.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\TextBox.js":[function(require,module,exports){
 
 var Item = require("./Item");
 
@@ -902,8 +907,8 @@ var TextBox = module.exports = Item.extend({
 
 });
 
-},{"./Item":4}],8:[function(require,module,exports){
+},{"./Item":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Item.js"}],"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\index.js":[function(require,module,exports){
 (function(){
   window.Printer = require("./Printer");
 }());
-},{"./Printer":5}]},{},[8]);
+},{"./Printer":"c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\Printer.js"}]},{},["c:\\Users\\pjnov_000\\Documents\\GitHub\\printer\\src\\js\\index.js"]);

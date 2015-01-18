@@ -41,7 +41,7 @@ var Grid = module.exports = Item.extend({
     var cols = this.cols;
     var rowEl = document.createElement("tr");
     var cellsEl = [];
-  
+
     for(var j=0; j<this.fields.length; j++){
       var field = this.fields[j];
       var cellProps = cols[j];
@@ -101,7 +101,7 @@ var Grid = module.exports = Item.extend({
 
     for(var i=0; i<this.valuesEl.length; i++){
       var row = this.valuesEl[i];
-      
+
       for(var j=0; j<row.length; j++){
 
         if (values[i].length-1 >= j){
@@ -118,7 +118,7 @@ var Grid = module.exports = Item.extend({
     for(var i=0; i<this.valuesEl.length; i++){
       var row = this.valuesEl[i];
       var rowVal = [];
-      
+
       for(var j=0; j<row.length; j++){
         rowVal.push(row[j].getValue());
       }

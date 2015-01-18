@@ -38,7 +38,7 @@ var TextBox = module.exports = Item.extend({
       this.el.style.height = this.el.scrollHeight + "px";
     }
     else {
-      this.el.style.height = "20px"; 
+      this.el.style.height = "20px";
     }
   },
 

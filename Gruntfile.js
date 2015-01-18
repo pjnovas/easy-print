@@ -16,6 +16,10 @@ module.exports = function(grunt) {
         printerCSS: "printer.css",
         printerJSMin: "printer.min.js",
         printerCSSMin: "printer.min.css"
+      },
+      test: {
+        root: "test/",
+        specs: "test/specs/"
       }
     },
 
@@ -24,7 +28,7 @@ module.exports = function(grunt) {
         src: [
           "<%= paths.dist.root %>*"
         ],
-      } 
+      }
     },
 
     browserify: {
@@ -34,12 +38,23 @@ module.exports = function(grunt) {
         },
         src: ['<%= paths.printer.js %>index.js'],
         dest: '<%= paths.dist.root %><%= paths.dist.printerJS %>'
+      },
+      watchify: {
+        options:{
+          extension: [ '.js' ],
+          debug: true,
+          watch: true
+        },
+        files: {
+          '<%= paths.test.root %>browserified_tests.js': ['<%= paths.test.root %>suite.js'],
+          '<%= paths.dist.root %><%= paths.dist.printerJS %>': ['<%= paths.printer.js %>index.js']
+        },
       }
     },
 
     copy: {
       css: {
-        cwd: "./", 
+        cwd: "./",
         files: {
           "<%= paths.dist.root %><%= paths.dist.printerCSS %>": "<%= paths.printer.css %>",
         }
@@ -49,34 +64,11 @@ module.exports = function(grunt) {
     jshint: {
       all: {
         files: {
-          src: ["<%= paths.printer.root %>**/*.js"]
+          src: ["<%= paths.printer.root %>**/*.js", "<%= paths.test.specs %>**/*.js"]
         },
         options: {
-          bitwise: true
-          ,curly: true
-          ,eqeqeq: true
-          ,immed: true
-          ,latedef: true
-          ,newcap: true
-          ,noempty: true
-          ,nonew: true
-          ,undef: true
-          ,unused: true
-          ,laxcomma: true
-          ,quotmark: false
-          ,loopfunc: false
-          ,forin: false
-
-          ,globals: {
-            window: true
-            ,document: true
-            ,console: true
-            ,module: true
-            ,require: true
-            ,printer: true
-          }
+          jshintrc: '.jshintrc'
         }
-
       }
     },
 
@@ -93,6 +85,12 @@ module.exports = function(grunt) {
             target: 'http://localhost:3000/examples/index.html',
           }
         }
+      },
+      servertest: {
+        options: {
+          base: '',
+          open: false
+        }
       }
     },
 
@@ -101,8 +99,18 @@ module.exports = function(grunt) {
         livereload: '<%= connect.options.livereload %>'
       },
       all: {
-        files: ["<%= paths.printer.root %>**/*"],
+        files: [
+          "<%= paths.printer.root %>**/*",
+          "<%= paths.test.root %>browserified_tests.js"
+        ],
         tasks: ['default']
+      },
+      tests: {
+        files: [
+          "<%= paths.printer.root %>**/*",
+          "<%= paths.test.root %>browserified_tests.js"
+        ],
+        tasks: ['jshint', 'mocha_phantomjs']
       }
     },
 
@@ -111,7 +119,7 @@ module.exports = function(grunt) {
     uglify: {
       all: {
         files: {
-          '<%= paths.dist.root %><%= paths.dist.printerJSMin %>': 
+          '<%= paths.dist.root %><%= paths.dist.printerJSMin %>':
             [ '<%= paths.dist.root %><%= paths.dist.printerJS %>' ]
         }
       }
@@ -120,8 +128,17 @@ module.exports = function(grunt) {
     cssmin: {
       all: {
         files: {
-          "<%= paths.dist.root %><%= paths.dist.printerCSSMin %>": 
+          "<%= paths.dist.root %><%= paths.dist.printerCSSMin %>":
             ["<%= paths.dist.root %><%= paths.dist.printerCSS %>"],
+        }
+      }
+    },
+
+    mocha_phantomjs: {
+      all: {
+        options: {
+          'reporter': 'spec',
+          urls: ["http://localhost:3000/test/index.html"]
         }
       }
     }
@@ -131,6 +148,7 @@ module.exports = function(grunt) {
   // server
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-mocha-phantomjs');
 
   // compile
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -141,26 +159,29 @@ module.exports = function(grunt) {
   // dist
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  
+
   var build = [
-    "clean", 
-    "jshint:all", 
-    "browserify", 
+    "clean",
+    "jshint:all",
+    "browserify:printer",
     "copy"
   ];
 
+  var test = [
+    "browserify:watchify",
+    "connect:servertest",
+    "mocha_phantomjs",
+    "watch:tests"
+  ];
+
   var dist = [
-    "uglify", 
+    "uglify",
     "cssmin"
   ];
 
   grunt.registerTask("default", build);
   grunt.registerTask("dist", build.concat(dist));
-  
-  return grunt.registerTask('server', function() {
-    grunt.task.run(build);
-    grunt.task.run('connect:server');
-    return grunt.task.run('watch:all');
-  });
-  
+  grunt.registerTask("server", build.concat(['connect:server', 'watch:all']));
+  grunt.registerTask("test", build.concat(test));
+
 };

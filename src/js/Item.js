@@ -13,7 +13,7 @@ module.exports = Base.extend({
   wrapped: true,
 
   start: function(options){
-    
+
     this.template = options;
     delete this.template.container;
     delete this.template.wrapped;
@@ -50,20 +50,23 @@ module.exports = Base.extend({
       wrapper.style.position = "absolute";
       wrapper.style.top = this.pos.y + "px";
       wrapper.style.left = this.pos.x + "px";
-      
+
       if (this.size && this.size.x){
         wrapper.style.width = ele.style.width = this.size.x + "px";
       }
-      
+
       wrapper.style.zIndex = 1;
       wrapper.className = "printer-item";
-      
+
       wrapper.appendChild(ele);
       this.container.appendChild(wrapper);
     }
     else {
-      ele.style.width = this.size.x + "px";
-      this.container.appendChild(ele); 
+      if (this.size){
+        ele.style.width = this.size.x + "px";
+      }
+
+      this.container.appendChild(ele);
     }
 
     this.el = ele;

@@ -31,7 +31,7 @@ _.extend = function(obj) {
   return obj;
 };
 
-// BASE CLASS 
+// BASE CLASS
 
 var Base = function(attributes) {
 
@@ -40,7 +40,7 @@ var Base = function(attributes) {
   }
 
   this.cid = _.uniqueId('c');
-  
+
   this.start.apply(this, arguments);
 };
 
@@ -51,7 +51,7 @@ _.extend(Base.prototype, {
 Base.extend = function(protoProps, staticProps) {
   var parent = this;
   var child = function(){ return parent.apply(this, arguments); };
-    
+
   _.extend(child, parent, staticProps);
 
   var Surrogate = function(){ this.constructor = child; };

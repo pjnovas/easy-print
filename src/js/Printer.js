@@ -18,18 +18,18 @@ module.exports = Base.extend({
   justSelect: false,
 
   start: function(options){
-    
+
     if (!options){
-      throw new Error("Expected options");
+      throw new Error("EasyPrint: Expected options");
     }
 
     if (!options.container){
-      throw new Error("Expected a 'container'");
+      throw new Error("EasyPrint: Expected a 'container'");
     }
 
     if (!options.template){
-      throw new Error("Expected a 'template'");
-    }    
+      throw new Error("EasyPrint: Expected a 'template'");
+    }
 
     var ready = options.ready || function(){};
 
@@ -41,7 +41,7 @@ module.exports = Base.extend({
 
     this.template = options.template;
     this.mode = (options && options.mode) || modes[0];
-  
+
     this.container.className += " printer-" + this.mode;
     this.size = this.template.size;
 
@@ -66,14 +66,14 @@ module.exports = Base.extend({
     var self = this;
 
     var img = new window.Image();
-    
+
     img.onload = function(){
       img.style.position = "absolute";
       img.style.zIndex = 0;
 
       self.container.appendChild(img);
 
-      if (self.template.useBgSize){      
+      if (self.template.useBgSize){
         self.size = {
           x: img.width,
           y: img.height
@@ -138,7 +138,7 @@ module.exports = Base.extend({
     for (var name in this.items){
       this.items[name].unselect();
     }
-    
+
     item.select();
     this.selected = item;
     this.justSelect = true;
@@ -167,20 +167,20 @@ module.exports = Base.extend({
         var inc = 1;
 
         if (self.controls.actions.shift){
-          inc = 20;          
+          inc = 20;
         }
 
         switch(arrow){
-          case "left": 
+          case "left":
             self.axisAcc.x -= inc;
           break;
-          case "right": 
+          case "right":
             self.axisAcc.x += inc;
           break;
-          case "up": 
+          case "up":
             self.axisAcc.y -= inc;
           break;
-          case "down": 
+          case "down":
             self.axisAcc.y += inc;
           break;
         }
@@ -189,12 +189,12 @@ module.exports = Base.extend({
       })
       .on("arrow:off", function(arrow){
         switch(arrow){
-          case "left": 
-          case "right": 
+          case "left":
+          case "right":
             self.axisAcc.x = 0;
           break;
-          case "up": 
-          case "down": 
+          case "up":
+          case "down":
             self.axisAcc.y = 0;
           break;
         }
@@ -226,7 +226,9 @@ module.exports = Base.extend({
 
   setMode: function(mode){
     var prefix = "printer-";
-    this.container.className = this.container.className.replace(prefix + this.mode, "");
+    this.container.className =
+      this.container.className.replace(prefix + this.mode, "");
+
     this.mode = mode;
     this.container.className += " " + prefix + this.mode;
 

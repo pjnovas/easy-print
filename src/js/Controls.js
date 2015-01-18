@@ -11,7 +11,7 @@ module.exports = Base.extend({
 
     , "arrow:on": null
     , "arrow:off": null
-    
+
     , "pause": null
   },
 
@@ -68,7 +68,7 @@ module.exports = Base.extend({
     var key = e.which || e.keyCode;
 
     switch(key){
-      case 37: 
+      case 37:
         return "arrow:left";
       case 38:
         return "arrow:up";
@@ -96,7 +96,7 @@ module.exports = Base.extend({
       }
 
       if (evName.indexOf("arrow") > -1){
-        var arrow = evName.split(":")[1];      
+        var arrow = evName.split(":")[1];
 
         evName = "arrow:off";
         if (this.events[evName]){
@@ -124,7 +124,7 @@ module.exports = Base.extend({
       }
 
       if (evName.indexOf("arrow") > -1){
-        var arrow = evName.split(":")[1];      
+        var arrow = evName.split(":")[1];
 
         evName = "arrow:on";
         if (this.events[evName]){
@@ -176,21 +176,21 @@ module.exports = Base.extend({
       , body = doc.body
       , docEle = doc.documentElement;
 
-    if (e.pageX || e.pageY) { 
+    if (e.pageX || e.pageY) {
       x = e.pageX;
       y = e.pageY;
     }
-    else { 
-      x = e.clientX + body.scrollLeft + docEle.scrollLeft; 
-      y = e.clientY + body.scrollTop + docEle.scrollTop; 
-    } 
-    
+    else {
+      x = e.clientX + body.scrollLeft + docEle.scrollLeft;
+      y = e.clientY + body.scrollTop + docEle.scrollTop;
+    }
+
     x -= ele.offsetLeft + parent.offsetLeft;
     y -= ele.offsetTop + parent.offsetTop;
 
     x += parent.scrollLeft;
     y += parent.scrollTop;
-    
+
     return { x: x, y: y };
   }
 
